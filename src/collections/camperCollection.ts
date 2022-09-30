@@ -41,9 +41,12 @@ type Camper = {
 };
 
 export const camperCollection = buildCollection<Camper>({
-  name: 'Campers',
+  name: 'Kampery',
   singularName: 'camper',
   path: 'campers',
+  description: 'Dodawaj, edytuj i usuwaj kampery',
+  exportable: true,
+  group: 'główne',
   permissions: ({ authController }) => ({
     edit: true,
     create: true,
@@ -95,26 +98,30 @@ export const camperCollection = buildCollection<Camper>({
     genericAmenities: {
       name: 'Ogólne udogodnienia',
       dataType: 'string',
-      markdown: true,
+
+      multiline: true,
       validation: { required: true },
     },
     kitchenAmenities: {
       name: 'Udogodnienia części kuchennej',
       dataType: 'string',
-      markdown: true,
+
+      multiline: true,
       validation: { required: true },
     },
     usableAmenities: {
       name: 'Udogodnienia części sypialno-użytkowej',
       dataType: 'string',
-      markdown: true,
+
+      multiline: true,
       validation: { required: true },
     },
 
     additionalEquipment: {
       name: 'Wyposażenie dodatkowe',
       dataType: 'string',
-      markdown: true,
+      multiline: true,
+
       validation: { required: true },
     },
 
@@ -133,7 +140,7 @@ export const camperCollection = buildCollection<Camper>({
         properties: {
           price: {
             name: 'Cena',
-            dataType: 'string',
+            dataType: 'number',
           },
           sesons: {
             name: 'Sezony',
