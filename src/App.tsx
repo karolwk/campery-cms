@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { firebaseConfig } from './shared/firebaseAPI';
 import { camperCollection } from './collections/camperCollection';
+import { mainAmenitiesCollection } from './collections/mainAmenitiesCollection';
+import { iconsCollection } from './collections/mainAmenitiesCollection';
 import { User as FirebaseUser } from 'firebase/auth';
 import { Authenticator, FirebaseCMSApp } from '@camberi/firecms';
 
@@ -29,7 +31,7 @@ export default function App() {
     <FirebaseCMSApp
       name={'Kampery na wynajem - zaplecze'}
       authentication={myAuthenticator}
-      collections={[camperCollection]}
+      collections={[camperCollection, mainAmenitiesCollection, iconsCollection]}
       firebaseConfig={firebaseConfig}
     />
   );
