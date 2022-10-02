@@ -43,6 +43,7 @@ type Camper = {
 export const camperCollection = buildCollection<Camper>({
   name: 'Kampery',
   singularName: 'camper',
+  icon: 'CarRental',
   path: 'campers',
   description: 'Dodawaj, edytuj i usuwaj kampery',
   exportable: true,
@@ -93,6 +94,14 @@ export const camperCollection = buildCollection<Camper>({
       dataType: 'string',
       markdown: true,
       validation: { required: true },
+    },
+    mainAmenities: {
+      dataType: 'array',
+      name: 'Wybierz główne udogodnienia',
+      of: {
+        dataType: 'reference',
+        path: 'mainAmenities',
+      },
     },
 
     genericAmenities: {
