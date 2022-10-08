@@ -26,6 +26,23 @@ type MainPageCollection = {
   faq: FaqMainPage[];
 };
 
+export const faqMainPageCollection = buildCollection<FaqMainPage>({
+  name: 'FAQ Strona główna',
+  singularName: 'faq',
+  path: 'faqMainPage',
+
+  properties: {
+    question: {
+      name: 'Pytanie',
+      dataType: 'string',
+    },
+    answer: {
+      name: 'Odpowiedź',
+      dataType: 'string',
+    },
+  },
+});
+
 export const mainPageCollection = buildCollection<MainPageCollection>({
   name: 'Strona Główna',
   singularName: 'mainpage',
