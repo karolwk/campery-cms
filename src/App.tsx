@@ -5,7 +5,10 @@ import { mainAmenitiesCollection } from './collections/mainAmenitiesCollection';
 import { iconsCollection } from './collections/mainAmenitiesCollection';
 import { User as FirebaseUser } from 'firebase/auth';
 import { Authenticator, FirebaseCMSApp } from '@camberi/firecms';
-
+import {
+  faqCollection,
+  mainPageCollection,
+} from './collections/mainPageCollection';
 import 'typeface-rubik';
 import '@fontsource/ibm-plex-mono';
 
@@ -31,7 +34,13 @@ export default function App() {
     <FirebaseCMSApp
       name={'Kampery na wynajem - zaplecze'}
       authentication={myAuthenticator}
-      collections={[camperCollection, mainAmenitiesCollection, iconsCollection]}
+      collections={[
+        camperCollection,
+        mainAmenitiesCollection,
+        iconsCollection,
+        faqCollection,
+        mainPageCollection,
+      ]}
       firebaseConfig={firebaseConfig}
     />
   );
