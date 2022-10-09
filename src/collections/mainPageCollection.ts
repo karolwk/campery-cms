@@ -23,13 +23,13 @@ type MainPageCollection = {
   teaserContent: string;
   campersTitle: string;
   campersDescription: string;
-  faq: FaqMainPage[];
+  faq: EntityReference[];
 };
 
-export const faqMainPageCollection = buildCollection<FaqMainPage>({
+export const faqCollection = buildCollection<FaqMainPage>({
   name: 'FAQ Strona główna',
   singularName: 'faq',
-  path: 'faqMainPage',
+  path: 'faq',
 
   properties: {
     question: {
@@ -39,6 +39,7 @@ export const faqMainPageCollection = buildCollection<FaqMainPage>({
     answer: {
       name: 'Odpowiedź',
       dataType: 'string',
+      markdown: true,
     },
   },
 });
@@ -67,13 +68,36 @@ export const mainPageCollection = buildCollection<MainPageCollection>({
       name: 'Opis strony',
       validation: { required: true },
       dataType: 'string',
+      multiline: true,
     },
+
     icons: {
       dataType: 'array',
       name: 'Wybierz opisy marketingowe',
       of: {
-        dataType: 'reference',
-        path: 'marketingIcons',
+        dataType: 'map',
+        properties: {
+          iconURL: {
+            name: 'Dodaj ikone',
+            dataType: 'string',
+            storage: {
+              storagePath: 'ikonsMarketing',
+              acceptedFiles: ['image/*'],
+              metadata: {
+                cacheControl: 'max-age=1000000',
+              },
+            },
+          },
+          title: {
+            name: 'Tytuł',
+            dataType: 'string',
+          },
+          description: {
+            name: 'Opis',
+            dataType: 'string',
+            markdown: true,
+          },
+        },
       },
     },
     teaserTitle: {
@@ -96,6 +120,15 @@ export const mainPageCollection = buildCollection<MainPageCollection>({
       name: 'Opis kamperów',
       validation: { required: true },
       dataType: 'string',
+      markdown: true,
+    },
+    faq: {
+      dataType: 'array',
+      name: 'Dodaj pytania do FAQ',
+      of: {
+        dataType: 'reference',
+        path: 'faq',
+      },
     },
   },
 });
