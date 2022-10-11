@@ -4,13 +4,23 @@ import {
   EntityReference,
 } from '@camberi/firecms';
 
+type GoogleMaps = {
+  type: 'Google Maps';
+  value: string
+}
+
+type SnazzyMaps = {
+  type: 'Snazzy Maps',
+  value: string
+}
+
 type PageSettings = {
   logoURL: string;
   email: string;
   phone: string;
   companyName: string;
   companyaddress: string;
-  maps?: 'Google' | 'SnazzyMaps';
+  maps?: (GoogleMaps | SnazzyMaps)[];
 };
 
 export const pageSettingsCollection = buildCollection<PageSettings>({
@@ -50,12 +60,14 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
     },
     maps: buildProperty({
       name: 'Wybierz mape',
+      
       description: 'Wybierz dostawcę mapki która będzie używana na stronie',
       dataType: 'array',
       oneOf:{
         typeField: 'type',
         valueField: 'value',
         properties:{
+          
         
         }
 
