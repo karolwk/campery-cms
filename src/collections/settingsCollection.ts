@@ -5,14 +5,14 @@ import {
 } from '@camberi/firecms';
 
 type GoogleMaps = {
-  type: 'Google Maps';
-  value: string
-}
+  type: 'googlemaps';
+  value: string;
+};
 
 type SnazzyMaps = {
-  type: 'Snazzy Maps',
-  value: string
-}
+  type: 'snazzymaps';
+  value: string;
+};
 
 type PageSettings = {
   logoURL: string;
@@ -20,7 +20,7 @@ type PageSettings = {
   phone: string;
   companyName: string;
   companyaddress: string;
-  maps?: (GoogleMaps | SnazzyMaps)[];
+  maps: (GoogleMaps | SnazzyMaps)[];
 };
 
 export const pageSettingsCollection = buildCollection<PageSettings>({
@@ -60,17 +60,22 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
     },
     maps: buildProperty({
       name: 'Wybierz mape',
-      
       description: 'Wybierz dostawcę mapki która będzie używana na stronie',
       dataType: 'array',
-      oneOf:{
+      oneOf: {
         typeField: 'type',
         valueField: 'value',
-        properties:{
-          
-        
-        }
-
-      }
-    }
-);
+        properties: {
+          googlemaps: buildProperty({
+            dataType: 'string',
+            name: 'Google Maps',
+          }),
+          snazzymaps: buildProperty({
+            dataType: 'string',
+            name: 'Snazzy Maps',
+          }),
+        },
+      },
+    }),
+  },
+});
