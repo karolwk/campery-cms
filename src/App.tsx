@@ -11,6 +11,7 @@ import {
 } from './collections/mainPageCollection';
 import 'typeface-rubik';
 import '@fontsource/ibm-plex-mono';
+import { pageSettingsCollection } from './collections/settingsCollection';
 
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
@@ -40,6 +41,7 @@ export default function App() {
         iconsCollection,
         faqCollection,
         mainPageCollection,
+        pageSettingsCollection,
       ]}
       firebaseConfig={firebaseConfig}
     />
