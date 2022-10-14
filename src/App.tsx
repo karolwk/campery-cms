@@ -4,7 +4,7 @@ import { camperCollection } from './collections/camperCollection';
 import { mainAmenitiesCollection } from './collections/mainAmenitiesCollection';
 import { iconsCollection } from './collections/mainAmenitiesCollection';
 import { User as FirebaseUser } from 'firebase/auth';
-import { Authenticator, FirebaseCMSApp } from '@camberi/firecms';
+import { Authenticator, FirebaseCMSApp, CMSView } from '@camberi/firecms';
 import {
   faqCollection,
   mainPageCollection,
@@ -12,6 +12,7 @@ import {
 import 'typeface-rubik';
 import '@fontsource/ibm-plex-mono';
 import { pageSettingsCollection } from './collections/settingsCollection';
+import SettingsView from './views/SettingsView';
 
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
@@ -31,6 +32,17 @@ export default function App() {
     []
   );
 
+  const customViews: CMSView[] = [
+    {
+      path: 'settings',
+      name: 'Ustawienia',
+      description: 'Ustawienia aplikacji',
+      icon: 'Settings',
+
+      view: <SettingsView />,
+    },
+  ];
+
   return (
     <FirebaseCMSApp
       name={'Kampery na wynajem - zaplecze'}
@@ -44,6 +56,7 @@ export default function App() {
         pageSettingsCollection,
       ]}
       firebaseConfig={firebaseConfig}
+      views={customViews}
     />
   );
 }
