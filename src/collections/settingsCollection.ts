@@ -26,6 +26,7 @@ type PageSettings = {
 export const pageSettingsCollection = buildCollection<PageSettings>({
   name: 'Ustawienia strony',
   description: 'Zmień główne ustawienia strony',
+  hideFromNavigation: true,
   path: 'settings',
   properties: {
     logoURL: {
