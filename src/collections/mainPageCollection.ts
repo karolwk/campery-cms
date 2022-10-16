@@ -30,6 +30,7 @@ export const faqCollection = buildCollection<FaqMainPage>({
   name: 'FAQ Strona główna',
   singularName: 'faq',
   path: 'faq',
+  hideFromNavigation: true,
 
   properties: {
     question: {
@@ -49,7 +50,7 @@ export const mainPageCollection = buildCollection<MainPageCollection>({
   singularName: 'mainpage',
   // icon: 'CarRental',
   path: 'mainPage',
-
+  hideFromNavigation: true,
   description: 'Dodawaj, edytuj i usuwaj kampery',
   exportable: true,
   group: 'główne',
