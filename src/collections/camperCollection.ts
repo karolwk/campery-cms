@@ -45,6 +45,7 @@ export const camperCollection = buildCollection<Camper>({
   singularName: 'camper',
   icon: 'CarRental',
   path: 'campers',
+
   description: 'Dodawaj, edytuj i usuwaj kampery',
   exportable: true,
   group: 'główne',
@@ -61,6 +62,7 @@ export const camperCollection = buildCollection<Camper>({
     },
     location: {
       name: 'Lokalizacja kampera',
+      description: 'np. Wieliczka, Polska',
       validation: { required: true },
       dataType: 'string',
     },
@@ -76,7 +78,8 @@ export const camperCollection = buildCollection<Camper>({
     images: buildProperty({
       name: 'Galeria',
       dataType: 'array',
-      description: 'Tutaj możesz dodać wiele obrazków',
+      description:
+        'Tutaj możesz dodać wiele obrazków, najlepiej wcześnie skompresowane.',
       of: {
         dataType: 'string',
         storage: {
@@ -171,7 +174,7 @@ export const camperCollection = buildCollection<Camper>({
     },
 
     technicals: {
-      name: 'Parametry techniczne',
+      name: 'Parametry techniczne kampera',
       dataType: 'map',
       properties: {
         brand: {
