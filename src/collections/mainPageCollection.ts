@@ -57,7 +57,7 @@ export const mainPageCollection = buildCollection<MainPageCollection>({
   permissions: ({ authController }) => ({
     edit: true,
     create: true,
-    delete: true,
+    delete: false,
   }),
   properties: {
     title: {
@@ -118,14 +118,14 @@ export const mainPageCollection = buildCollection<MainPageCollection>({
       dataType: 'string',
     },
     campersDescription: {
-      name: 'Opis kamperów',
+      name: 'Opis główny kamperów',
       validation: { required: true },
       dataType: 'string',
       markdown: true,
     },
     faq: {
       dataType: 'array',
-      name: 'Dodaj pytania do FAQ',
+      name: 'Dodaj pytania do FAQ na stronie głównej',
       of: {
         dataType: 'reference',
         path: 'faq',
