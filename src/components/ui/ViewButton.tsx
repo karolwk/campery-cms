@@ -9,8 +9,17 @@ import {
 type Props = {
   onClick: () => void;
   content: string;
-  buttonText: string;
-  color?: string;
+  buttonText?: string;
+  children?: React.ReactNode;
+  color?:
+    | 'secondary'
+    | 'inherit'
+    | 'primary'
+    | 'success'
+    | 'error'
+    | 'info'
+    | 'warning'
+    | undefined;
 };
 
 const ViewButton = ({
@@ -18,6 +27,7 @@ const ViewButton = ({
   color = 'primary',
   content,
   buttonText,
+  children,
 }: Props) => {
   return (
     <Card variant="outlined" sx={{ height: '100%' }}>
@@ -26,8 +36,8 @@ const ViewButton = ({
       </CardContent>
 
       <CardActions>
-        <Button onClick={onClick} color={color as 'primary'}>
-          {buttonText}
+        <Button onClick={onClick} color={color}>
+          {!children ? buttonText : children}
         </Button>
       </CardActions>
     </Card>
