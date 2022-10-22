@@ -11,7 +11,7 @@ type Icons = {
 };
 
 export const iconsCollection = buildCollection<Icons>({
-  name: 'IkonA',
+  name: 'Ikona',
   path: 'icons',
   description: 'Dodaj ikony',
   group: 'dodatkowe',
@@ -35,10 +35,11 @@ export const iconsCollection = buildCollection<Icons>({
 });
 
 export const mainAmenitiesCollection = buildCollection<MainAmenities>({
-  name: 'Główne udogodnienia',
-  singularName: 'mainAmenities',
+  name: 'Kampery - główne udogodnienia',
+  singularName: 'Udogodnienie',
   path: 'mainAmenities',
   description: 'Dodawaj, edytuj i usuwaj kampery',
+  icon: 'RvHookup',
   exportable: true,
   group: 'dodatkowe',
   properties: {

@@ -1,8 +1,4 @@
-import {
-  buildCollection,
-  buildProperty,
-  EntityReference,
-} from '@camberi/firecms';
+import { buildCollection, EntityReference } from '@camberi/firecms';
 
 type MarKetingIcons = {
   iconURL: string;
