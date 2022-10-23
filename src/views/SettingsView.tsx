@@ -7,9 +7,6 @@ import {
   CardContent,
   Container,
   Grid,
-  IconButton,
-  Paper,
-  Tooltip,
   Typography,
 } from '@mui/material';
 
@@ -29,10 +26,10 @@ import ViewButton from '../components/ui/ViewButton';
 type Props = {};
 
 const SettingsView = (props: Props) => {
-  const sideEntityController = useSideEntityController();
+  const contactsEntityController = useSideEntityController();
 
   const onEntityButtonHandler = () =>
-    sideEntityController.open({
+    contactsEntityController.open({
       entityId: '4qep1ITrkPDrxDRnaeYy',
       path: '/settings', // this path is not mapped in our collections
       collection: pageSettingsCollection,
@@ -41,7 +38,6 @@ const SettingsView = (props: Props) => {
   return (
     <Box display="flex" width={'100%'} height="100%">
       <Box
-        m="auto"
         display="flex"
         flexDirection={'column'}
         alignItems={'center'}
@@ -55,9 +51,7 @@ const SettingsView = (props: Props) => {
         >
           <Grid container rowSpacing={5} columnSpacing={2}>
             <Grid item xs={12}>
-              <Typography variant={'h4'}>
-                Tutaj zmienisz ustawienia strony
-              </Typography>
+              <Typography variant={'h4'}>Ustawienia strony</Typography>
             </Grid>
 
             <Grid item xs={12} sm={4}>
@@ -66,6 +60,15 @@ const SettingsView = (props: Props) => {
                 content="Zmień ustawienia kontaktowo/adresowe"
                 buttonText="Zmień"
               />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <ViewButton
+                onClick={onEntityButtonHandler}
+                content="Zmień ustawienia kontaktowo/adresowe"
+              >
+                adsasd
+              </ViewButton>
             </Grid>
           </Grid>
         </Container>
