@@ -13,6 +13,7 @@ import 'typeface-rubik';
 import '@fontsource/ibm-plex-mono';
 import { pageSettingsCollection } from './collections/settingsCollection';
 import SettingsView from './views/SettingsView';
+import PagesView from './views/PagesView';
 
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
@@ -30,6 +31,13 @@ export default function App() {
   );
 
   const customViews: CMSView[] = [
+    {
+      path: 'strony',
+      name: 'Strony',
+      description: 'Edytuj strony',
+      icon: 'Web',
+      view: <PagesView />,
+    },
     {
       path: 'settings',
       name: 'Ustawienia',
