@@ -22,10 +22,14 @@ import {
 } from '@camberi/firecms';
 import { pageSettingsCollection } from '../collections/settingsCollection';
 import ViewButton from '../components/ui/ViewButton';
+import TopView from '../components/ui/TopView';
+import { faqCollection, FaqMainPage } from '../collections/mainPageCollection';
 
 type Props = {};
 
 const SettingsView = (props: Props) => {
+  const snackbarController = useSnackbarController();
+
   const contactsEntityController = useSideEntityController();
 
   const onEntityButtonHandler = () =>
@@ -35,45 +39,38 @@ const SettingsView = (props: Props) => {
       collection: pageSettingsCollection,
       width: 800,
     });
+
+  const referenceDialog = useReferenceDialog({
+    path: 'faq',
+    onSingleEntitySelected(entity: Entity<FaqMainPage> | null) {
+      contactsEntityController.open({
+        entityId: entity?.id,
+        path: '/faq', // this path is not mapped in our collections
+        collection: faqCollection,
+        width: 800,
+      });
+    },
+  });
+
   return (
-    <Box display="flex" width={'100%'} height="100%">
-      <Box
-        display="flex"
-        flexDirection={'column'}
-        alignItems={'center'}
-        justifyItems={'center'}
+    <TopView title="Ustawienia strony">
+      <ViewButton
+        onClick={onEntityButtonHandler}
+        content="Podstawowe dane"
+        buttonText="Zmień"
+      />
+
+      <ViewButton onClick={onEntityButtonHandler} content="Sociale">
+        Zmień
+      </ViewButton>
+
+      <ViewButton
+        onClick={referenceDialog.open}
+        content="Często zadawane pytania (FAQ)"
       >
-        <Container
-          maxWidth={'md'}
-          sx={{
-            my: 4,
-          }}
-        >
-          <Grid container rowSpacing={5} columnSpacing={2}>
-            <Grid item xs={12}>
-              <Typography variant={'h4'}>Ustawienia strony</Typography>
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-              <ViewButton
-                onClick={onEntityButtonHandler}
-                content="Zmień ustawienia kontaktowo/adresowe"
-                buttonText="Zmień"
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-              <ViewButton
-                onClick={onEntityButtonHandler}
-                content="Zmień ustawienia kontaktowo/adresowe"
-              >
-                adsasd
-              </ViewButton>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-    </Box>
+        Zmień
+      </ViewButton>
+    </TopView>
   );
 };
 
