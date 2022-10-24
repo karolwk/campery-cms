@@ -6,7 +6,7 @@ type MarKetingIcons = {
   description: string;
 };
 
-type FaqMainPage = {
+export type FaqMainPage = {
   question: string;
   answer: string;
 };
@@ -27,6 +27,11 @@ export const faqCollection = buildCollection<FaqMainPage>({
   singularName: 'faq',
   path: 'faq',
   hideFromNavigation: true,
+  permissions: ({ authController }) => ({
+    edit: true,
+    create: true,
+    delete: true,
+  }),
 
   properties: {
     question: {
@@ -43,13 +48,13 @@ export const faqCollection = buildCollection<FaqMainPage>({
 
 export const mainPageCollection = buildCollection<MainPageCollection>({
   name: 'Strona Główna',
-  singularName: 'mainpage',
+  singularName: 'Strona Główna',
   // icon: 'CarRental',
   path: 'mainPage',
   hideFromNavigation: true,
   description: 'Dodawaj, edytuj i usuwaj kampery',
   exportable: true,
-  group: 'główne',
+  group: 'strony',
   permissions: ({ authController }) => ({
     edit: true,
     create: true,

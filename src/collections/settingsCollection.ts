@@ -28,6 +28,8 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
   description: 'Zmień główne ustawienia strony',
   hideFromNavigation: true,
   path: 'settings',
+  singularName: 'Podstawowe dane kontatkowe',
+  group: 'pozostałe',
   properties: {
     logoURL: {
       name: 'Wybierz logo',

@@ -43,7 +43,7 @@ type Camper = {
 export const camperCollection = buildCollection<Camper>({
   name: 'Kampery',
   singularName: 'camper',
-  icon: 'CarRental',
+  icon: 'AirportShuttle',
   path: 'campers',
 
   description: 'Dodawaj, edytuj i usuwaj kampery',
