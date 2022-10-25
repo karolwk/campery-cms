@@ -6,11 +6,6 @@ type MarKetingIcons = {
   description: string;
 };
 
-export type FaqMainPage = {
-  question: string;
-  answer: string;
-};
-
 type MainPageCollection = {
   title: string;
   description: string;
@@ -21,30 +16,6 @@ type MainPageCollection = {
   campersDescription: string;
   faq: EntityReference[];
 };
-
-export const faqCollection = buildCollection<FaqMainPage>({
-  name: 'FAQ Strona główna',
-  singularName: 'faq',
-  path: 'faq',
-  hideFromNavigation: true,
-  permissions: ({ authController }) => ({
-    edit: true,
-    create: true,
-    delete: true,
-  }),
-
-  properties: {
-    question: {
-      name: 'Pytanie',
-      dataType: 'string',
-    },
-    answer: {
-      name: 'Odpowiedź',
-      dataType: 'string',
-      markdown: true,
-    },
-  },
-});
 
 export const mainPageCollection = buildCollection<MainPageCollection>({
   name: 'Strona Główna',
