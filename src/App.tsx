@@ -5,15 +5,13 @@ import { mainAmenitiesCollection } from './collections/mainAmenitiesCollection';
 import { iconsCollection } from './collections/mainAmenitiesCollection';
 import { User as FirebaseUser } from 'firebase/auth';
 import { Authenticator, FirebaseCMSApp, CMSView } from '@camberi/firecms';
-import {
-  faqCollection,
-  mainPageCollection,
-} from './collections/mainPageCollection';
+import { mainPageCollection } from './collections/mainPageCollection';
 import 'typeface-rubik';
 import '@fontsource/ibm-plex-mono';
 import { pageSettingsCollection } from './collections/settingsCollection';
 import SettingsView from './views/SettingsView';
 import PagesView from './views/PagesView';
+import { faqCollection } from './collections/faqCollections';
 
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
