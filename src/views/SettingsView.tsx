@@ -22,13 +22,9 @@ const SettingsView = (props: Props) => {
     <TopView title="Ustawienia strony">
       <ViewButton
         onClick={onEntityButtonHandler}
-        content="Podstawowe dane"
+        content="Podstawowe dane kontaktowe"
         buttonText="Zmień"
       />
-
-      <ViewButton onClick={onEntityButtonHandler} content="Sociale">
-        Zmień
-      </ViewButton>
     </TopView>
   );
 };
