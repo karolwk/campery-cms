@@ -1,17 +1,17 @@
 import {
   buildCollection,
   buildProperty,
-  EntityReference,
+  buildProperties,
 } from '@camberi/firecms';
 
 type GoogleMaps = {
   type: 'googlemaps';
-  value: string;
+  url: string;
 };
 
 type SnazzyMaps = {
   type: 'snazzymaps';
-  value: string;
+  url: string;
 };
 
 type PageSettings = {
@@ -20,7 +20,11 @@ type PageSettings = {
   phone: string;
   companyName: string;
   companyaddress: string;
-  maps: (GoogleMaps | SnazzyMaps)[];
+  maps: GoogleMaps | SnazzyMaps;
+  facebook: string | null;
+  instagram: string | null;
+  pinterest: string | null;
+  twitter: string | null;
 };
 
 export const pageSettingsCollection = buildCollection<PageSettings>({
@@ -55,30 +59,61 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
     companyName: {
       name: 'Podaj dane firmy/osoby',
       dataType: 'string',
+      validation: { required: true },
     },
     companyaddress: {
       name: 'Podaj adres siedziby',
       dataType: 'string',
       multiline: true,
+      validation: { required: true },
     },
-    maps: buildProperty({
-      name: 'Wybierz mape',
-      description: 'Wybierz dostawcę mapki która będzie używana na stronie',
-      dataType: 'array',
-      oneOf: {
-        typeField: 'type',
-        valueField: 'value',
-        properties: {
-          googlemaps: buildProperty({
-            dataType: 'string',
-            name: 'Google Maps',
-          }),
-          snazzymaps: buildProperty({
-            dataType: 'string',
-            name: 'Snazzy Maps',
-          }),
+    facebook: {
+      name: 'Podaj adres strony na Facebooku',
+      dataType: 'string',
+    },
+    instagram: {
+      name: 'Podaj adres do Instagrama',
+      dataType: 'string',
+    },
+    pinterest: {
+      name: 'Podaj adres do Pinteresta',
+      dataType: 'string',
+    },
+    twitter: {
+      name: 'Podaj adres do Twittera',
+      dataType: 'string',
+    },
+
+    maps: ({ values }) => {
+      const properties = buildProperties<any>({
+        type: {
+          dataType: 'string',
+          enumValues: {
+            google: 'Mapy Google',
+            snazzyMaps: 'Mapy Snazzy Maps',
+          },
         },
-      },
-    }),
+      });
+
+      if (values.maps) {
+        if ((values.maps as any).type === 'google') {
+          properties['url'] = buildProperty({
+            dataType: 'string',
+            name: 'wklej adres url mapki',
+          });
+        } else if ((values.maps as any).type === 'snazzyMaps') {
+          properties['url'] = buildProperty({
+            dataType: 'string',
+            name: 'wklej adres url mapki',
+          });
+        }
+      }
+
+      return {
+        dataType: 'map',
+        name: 'Mapy',
+        properties: properties,
+      };
+    },
   },
 });
