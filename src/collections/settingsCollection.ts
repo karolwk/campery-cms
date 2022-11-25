@@ -20,6 +20,8 @@ type PageSettings = {
   phone: string;
   companyName: string;
   companyaddress: string;
+  companyZipCode: string;
+  companyCity: string;
   maps: GoogleMaps | SnazzyMaps;
   facebook: string | null;
   instagram: string | null;
@@ -63,6 +65,18 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
     },
     companyaddress: {
       name: 'Podaj adres siedziby',
+      dataType: 'string',
+      multiline: true,
+      validation: { required: true },
+    },
+    companyCity: {
+      name: 'Podaj miasto',
+      dataType: 'string',
+      multiline: true,
+      validation: { required: true },
+    },
+    companyZipCode: {
+      name: 'Podaj kod pocztowy',
       dataType: 'string',
       multiline: true,
       validation: { required: true },
