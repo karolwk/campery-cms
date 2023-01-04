@@ -139,6 +139,7 @@ export const camperCollection = buildCollection<Camper>({
 
     priceInfo: {
       name: 'Dodatkowe informacje do cen',
+
       dataType: 'string',
     },
 
@@ -152,14 +153,17 @@ export const camperCollection = buildCollection<Camper>({
         properties: {
           price: {
             name: 'Cena',
+            description: 'podaj samą kwotę bez jednostek',
             dataType: 'number',
           },
           sesons: {
             name: 'Sezony',
+            description: 'np. lipiec-sierpień',
             dataType: 'string',
           },
           info: {
             name: 'Dodatkowe info o rabatach',
+            description: 'np. Przy wynajmie powyżej 14dni 5% zniżki',
             dataType: 'string',
           },
         },
