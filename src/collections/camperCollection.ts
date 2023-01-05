@@ -109,6 +109,8 @@ export const camperCollection = buildCollection<Camper>({
 
     genericAmenities: {
       name: 'Ogólne udogodnienia',
+      description:
+        'WAŻNE! oddzielaj przecinakami np. hak holowniczy, klimatyzacja silinkowa, esp',
       dataType: 'string',
 
       multiline: true,
@@ -116,6 +118,8 @@ export const camperCollection = buildCollection<Camper>({
     },
     kitchenAmenities: {
       name: 'Udogodnienia części kuchennej',
+      description:
+        'oddzielaj przecinakami np. grill Elektryczny, kuchnia gazowa, zestaw sztućców',
       dataType: 'string',
 
       multiline: true,
@@ -123,6 +127,8 @@ export const camperCollection = buildCollection<Camper>({
     },
     usableAmenities: {
       name: 'Udogodnienia części sypialno-użytkowej',
+      description:
+        'oddzielaj przecinakami np. 3 łóżka, smart TV, dywaniki w kabinie kierowcy',
       dataType: 'string',
 
       multiline: true,
@@ -139,7 +145,6 @@ export const camperCollection = buildCollection<Camper>({
 
     priceInfo: {
       name: 'Dodatkowe informacje do cen',
-
       dataType: 'string',
     },
 
