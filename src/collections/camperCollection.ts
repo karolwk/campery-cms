@@ -1,8 +1,10 @@
 import {
   buildCollection,
+  buildEntityCallbacks,
   buildProperty,
   EntityReference,
 } from '@camberi/firecms';
+import { makeURLfromName } from '../utils/helpers';
 
 type CamperTechnicals = {
   brand: string;
@@ -21,6 +23,7 @@ type CamperTechnicals = {
 
 type Camper = {
   name: string;
+  urlSlug: string;
   location: string;
   mainImage: string;
   images: string[];
@@ -39,6 +42,14 @@ type Camper = {
   technicals: CamperTechnicals;
   mainAmenities?: EntityReference[];
 };
+
+const productCallbacks = buildEntityCallbacks({
+  onPreSave: ({ values }) => {
+    // return the updated values
+    values.urlSlug = makeURLfromName(values.name);
+    return values;
+  },
+});
 
 export const camperCollection = buildCollection<Camper>({
   name: 'Kampery',
@@ -59,6 +70,13 @@ export const camperCollection = buildCollection<Camper>({
       name: 'Nazwa modelu',
       validation: { required: true },
       dataType: 'string',
+    },
+    urlSlug: {
+      name: 'Adres url',
+      dataType: 'string',
+      disabled: true,
+      // hideFromCollection: true,
+      description: 'To pole zostanie zapisane przed zapisaniem',
     },
     location: {
       name: 'Lokalizacja kampera',
@@ -235,4 +253,5 @@ export const camperCollection = buildCollection<Camper>({
       },
     },
   },
+  callbacks: productCallbacks,
 });
