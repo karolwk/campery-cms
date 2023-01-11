@@ -43,7 +43,7 @@ type Camper = {
   mainAmenities?: EntityReference[];
 };
 
-const productCallbacks = buildEntityCallbacks({
+const camperCallbacks = buildEntityCallbacks({
   onPreSave: ({ values }) => {
     // return the updated values
     values.urlSlug = makeURLfromName(values.name);
@@ -253,5 +253,5 @@ export const camperCollection = buildCollection<Camper>({
       },
     },
   },
-  callbacks: productCallbacks,
+  callbacks: camperCallbacks,
 });
