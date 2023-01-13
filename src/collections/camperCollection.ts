@@ -75,7 +75,7 @@ export const camperCollection = buildCollection<Camper>({
       name: 'Adres url',
       dataType: 'string',
       disabled: true,
-      // hideFromCollection: true,
+      hideFromCollection: true,
       description: 'To pole zostanie zapisane przed zapisaniem',
     },
     location: {
