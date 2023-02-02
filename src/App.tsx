@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 import { firebaseConfig } from './shared/firebaseAPI';
 import { camperCollection } from './collections/camperCollection';
 import { mainAmenitiesCollection } from './collections/mainAmenitiesCollection';
-import { iconsCollection } from './collections/mainAmenitiesCollection';
 import { User as FirebaseUser } from 'firebase/auth';
 import { Authenticator, FirebaseCMSApp, CMSView } from '@camberi/firecms';
 import { mainPageCollection } from './collections/mainPageCollection';
@@ -53,7 +52,6 @@ export default function App() {
       collections={[
         camperCollection,
         mainAmenitiesCollection,
-        iconsCollection,
         faqCollection,
         mainPageCollection,
         pageSettingsCollection,
