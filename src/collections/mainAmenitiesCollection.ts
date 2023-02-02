@@ -1,38 +1,10 @@
 import { buildCollection, EntityReference } from '@camberi/firecms';
+import IconPreview from '../components/ui/Previews/IconPreview';
 
 type MainAmenities = {
   name: string;
-  icon: EntityReference;
+  icon: string;
 };
-
-type Icons = {
-  name: string;
-  iconPath: string;
-};
-
-export const iconsCollection = buildCollection<Icons>({
-  name: 'Ikona',
-  path: 'icons',
-  description: 'Dodaj ikony',
-  group: 'dodatkowe',
-  hideFromNavigation: true,
-  properties: {
-    name: {
-      name: 'Nazwa ikony',
-      dataType: 'string',
-    },
-    iconPath: {
-      name: 'Obrazek ikony',
-      dataType: 'string',
-
-      storage: {
-        storagePath: 'icons',
-        acceptedFiles: ['image/*'],
-        maxSize: 1024 * 1024,
-      },
-    },
-  },
-});
 
 export const mainAmenitiesCollection = buildCollection<MainAmenities>({
   name: 'Kampery - główne udogodnienia',
@@ -49,10 +21,12 @@ export const mainAmenitiesCollection = buildCollection<MainAmenities>({
       dataType: 'string',
     },
     icon: {
-      dataType: 'reference',
-      path: 'icons',
+      dataType: 'string',
       name: 'Ikona',
-      description: 'Wybierz ikonę opisującą udogodnienie',
+      defaultValue: 'checkBox',
+      description: 'Ustaw ikone opisującą udogodnienie',
+      Preview: IconPreview,
+      validation: { required: true },
     },
   },
 });
