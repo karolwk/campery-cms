@@ -1,10 +1,19 @@
-import { buildCollection, EntityReference } from '@camberi/firecms';
+import { buildCollection, buildEntityCallbacks } from '@camberi/firecms';
 import IconPreview from '../components/ui/Previews/IconPreview';
+import { firstLetterLowercase } from '../utils/helpers';
 
 type MainAmenities = {
   name: string;
   icon: string;
 };
+
+const amenitiesCallbacks = buildEntityCallbacks({
+  onPreSave: ({ values }) => {
+    // return the updated values
+    values.icon = firstLetterLowercase(values.icon);
+    return values;
+  },
+});
 
 export const mainAmenitiesCollection = buildCollection<MainAmenities>({
   name: 'Kampery - główne udogodnienia',
@@ -24,9 +33,11 @@ export const mainAmenitiesCollection = buildCollection<MainAmenities>({
       dataType: 'string',
       name: 'Ikona',
       defaultValue: 'checkBox',
-      description: 'Ustaw ikone opisującą udogodnienie',
+      description:
+        'Ustaw ikone opisującą udogodnienie. Nazwy znajdziesz pod adresem: https://fonts.google.com/icons?icon.set=Material+Icons',
       Preview: IconPreview,
       validation: { required: true },
     },
   },
+  callbacks: amenitiesCallbacks,
 });
