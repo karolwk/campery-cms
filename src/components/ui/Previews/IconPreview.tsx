@@ -1,18 +1,14 @@
-import React, { ReactElement } from 'react';
 import { PropertyPreviewProps } from '@camberi/firecms';
+import { Typography } from '@mui/material';
 
 import Icon from '@mui/material/Icon';
 
-export default function IconPreview({
-  value,
-  property,
-  size,
-}: PropertyPreviewProps<string>) {
+export default function IconPreview({ value }: PropertyPreviewProps<string>) {
   return value ? (
     <>
       <Icon>{value}</Icon>
     </>
   ) : (
-    <Icon baseClassName="Abc" color="primary" />
+    <Typography>No icon</Typography>
   );
 }
