@@ -11,6 +11,8 @@ import { pageSettingsCollection } from './collections/settingsCollection';
 import SettingsView from './views/SettingsView';
 import PagesView from './views/PagesView';
 import { faqCollection } from './collections/faqCollections';
+import { statutPageCollection } from './collections/statutPageCollection';
+import { privacyPageCollection } from './collections/privacyPageCollection';
 
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
@@ -55,6 +57,8 @@ export default function App() {
         faqCollection,
         mainPageCollection,
         pageSettingsCollection,
+        statutPageCollection,
+        privacyPageCollection,
       ]}
       firebaseConfig={firebaseConfig}
       views={customViews}
