@@ -1,32 +1,12 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  Tooltip,
-  Typography,
-} from '@mui/material';
 
-import {
-  buildCollection,
-  Entity,
-  EntityCollectionView,
-  useAuthController,
-  useReferenceDialog,
-  useSelectionController,
-  useSideEntityController,
-  useSnackbarController,
-} from '@camberi/firecms';
+import { useSideEntityController } from '@camberi/firecms';
 
 import ViewButton from '../components/ui/ViewButton';
 import TopView from '../components/ui/TopView';
 import { mainPageCollection } from '../collections/mainPageCollection';
+import { statutPageCollection } from '../collections/statutPageCollection';
+import { privacyPageCollection } from '../collections/privacyPageCollection';
 
 type Props = {};
 
@@ -41,6 +21,23 @@ const PagesView = (props: Props) => {
       width: 800,
     });
 
+  const statutPageEntityHandler = () =>
+    contactsEntityController.open({
+      entityId: 'GtdzfNw5YO6TNysXj6lU',
+      path: '/statutPage',
+      collection: statutPageCollection,
+      width: 800,
+    });
+
+  const privacyPageEntityHandler = () => {
+    contactsEntityController.open({
+      entityId: 'KZmsOUu5YWPleloaEDRp',
+      path: '/privacyPage',
+      collection: privacyPageCollection,
+      width: 800,
+    });
+  };
+
   return (
     <TopView title="Edytuj strony">
       <ViewButton
@@ -49,12 +46,12 @@ const PagesView = (props: Props) => {
         buttonText="Zmień"
       />
       <ViewButton
-        onClick={mainPageEntityHandler}
-        content="Strona 'O nas'"
+        onClick={privacyPageEntityHandler}
+        content="Strona 'Polityka Prywatności'"
         buttonText="Zmień"
       />
       <ViewButton
-        onClick={mainPageEntityHandler}
+        onClick={statutPageEntityHandler}
         content="Strona 'Warunki wynajmu'"
         buttonText="Zmień"
       />
