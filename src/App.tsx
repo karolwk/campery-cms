@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { firebaseConfig } from './shared/firebaseAPI';
+import { adminsUIDS, firebaseConfig } from './shared/firebaseAPI';
 import { camperCollection } from './collections/camperCollection';
 import { mainAmenitiesCollection } from './collections/mainAmenitiesCollection';
 import { User as FirebaseUser } from 'firebase/auth';
@@ -17,14 +17,21 @@ import { privacyPageCollection } from './collections/privacyPageCollection';
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
     async ({ user, authController }) => {
-      if (user?.email?.includes('flanders')) {
-        throw Error('Stupid Flanders!');
+      // if (user?.email?.includes('sanmaryno')) {
+      //   throw Error('Stupid Flanders!');
+      // }
+
+      if (adminsUIDS.includes(user?.uid as string)) {
+        return true;
+      } else {
+        throw Error('Brak uprawnień by przeglądać tą stronę!');
       }
+      // console.log(user);
 
-      const sampleUserRoles = await Promise.resolve(['admin']);
-      authController.setExtra(sampleUserRoles);
+      // const sampleUserRoles = await Promise.resolve(['admin']);
+      // authController.setExtra(sampleUserRoles);
 
-      return true;
+      // return true;
     },
     []
   );
