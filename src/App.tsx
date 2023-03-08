@@ -13,25 +13,16 @@ import PagesView from './views/PagesView';
 import { faqCollection } from './collections/faqCollections';
 import { statutPageCollection } from './collections/statutPageCollection';
 import { privacyPageCollection } from './collections/privacyPageCollection';
+import { tokensCollection } from './collections/tokensCollections';
 
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
     async ({ user, authController }) => {
-      // if (user?.email?.includes('sanmaryno')) {
-      //   throw Error('Stupid Flanders!');
-      // }
-
       if (adminsUIDS.includes(user?.uid as string)) {
         return true;
       } else {
         throw Error('Brak uprawnień by przeglądać tą stronę!');
       }
-      // console.log(user);
-
-      // const sampleUserRoles = await Promise.resolve(['admin']);
-      // authController.setExtra(sampleUserRoles);
-
-      // return true;
     },
     []
   );
@@ -66,6 +57,7 @@ export default function App() {
         pageSettingsCollection,
         statutPageCollection,
         privacyPageCollection,
+        tokensCollection,
       ]}
       firebaseConfig={firebaseConfig}
       views={customViews}
