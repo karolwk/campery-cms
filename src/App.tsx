@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { adminsUIDS, firebaseConfig } from './shared/firebaseAPI';
+import { adminsUIDS, firebaseConfig } from './shared/API';
 import { camperCollection } from './collections/camperCollection';
 import { mainAmenitiesCollection } from './collections/mainAmenitiesCollection';
 import { User as FirebaseUser } from 'firebase/auth';
