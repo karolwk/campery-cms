@@ -2,7 +2,11 @@ import {
   buildCollection,
   buildProperty,
   buildProperties,
+  buildEntityCallbacks,
+  EntityOnSaveProps,
 } from '@camberi/firecms';
+import { getToken } from '../utils/helpers';
+import { revalidatePage } from '../utils/nextRevalidate';
 
 type GoogleMaps = {
   type: 'googlemaps';
@@ -22,12 +26,21 @@ type PageSettings = {
   companyaddress: string;
   companyZipCode: string;
   companyCity: string;
+  googleMapsApi: string;
   maps: GoogleMaps | SnazzyMaps;
   facebook: string | null;
   instagram: string | null;
   pinterest: string | null;
   twitter: string | null;
 };
+
+const pageSettingsCallbacks = buildEntityCallbacks({
+  //update front page
+  onSaveSuccess: async ({ context }: EntityOnSaveProps<PageSettings>) => {
+    const res = await revalidatePage(context, '/kontakt');
+    console.log(res);
+  },
+});
 
 export const pageSettingsCollection = buildCollection<PageSettings>({
   name: 'Ustawienia strony',
@@ -40,6 +53,7 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
     logoURL: {
       name: 'Wybierz logo',
       dataType: 'string',
+
       storage: {
         storagePath: 'images',
         acceptedFiles: ['image/*'],
@@ -97,6 +111,11 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
       name: 'Podaj adres do Twittera',
       dataType: 'string',
     },
+    googleMapsApi: {
+      dataType: 'string',
+      name: 'API Google Mapy',
+      description: "API do wyświetlania mapy na stronie 'Kontakt'",
+    },
 
     maps: ({ values }) => {
       const properties = buildProperties<any>({
@@ -126,8 +145,10 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
       return {
         dataType: 'map',
         name: 'Mapy',
+
         properties: properties,
       };
     },
   },
+  callbacks: pageSettingsCallbacks,
 });

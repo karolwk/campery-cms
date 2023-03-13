@@ -3,8 +3,10 @@ import {
   buildEntityCallbacks,
   buildProperty,
   EntityReference,
+  EntityOnSaveProps,
 } from '@camberi/firecms';
 import { makeURLfromName } from '../utils/helpers';
+import { revalidatePage } from '../utils/nextRevalidate';
 
 type CamperTechnicals = {
   brand: string;
@@ -48,6 +50,11 @@ const camperCallbacks = buildEntityCallbacks({
     // return the updated values
     values.urlSlug = makeURLfromName(values.name);
     return values;
+  },
+  // update server
+  onSaveSuccess: async ({ context, values }: EntityOnSaveProps<any>) => {
+    const res = await revalidatePage(context, values.urlSlug);
+    console.log(res);
   },
 });
 

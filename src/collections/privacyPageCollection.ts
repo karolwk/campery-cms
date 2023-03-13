@@ -1,5 +1,10 @@
-import { buildCollection } from '@camberi/firecms';
-
+import {
+  buildCollection,
+  EntityOnSaveProps,
+  buildEntityCallbacks,
+} from '@camberi/firecms';
+import { revalidatePage } from '../utils/nextRevalidate';
+import { makeURLfromName } from '../utils/helpers';
 type StatutPageCollection = {
   metaTitle: string;
   metaDescription: string;
@@ -7,6 +12,21 @@ type StatutPageCollection = {
   pageSubtitle: string;
   mainContent: string;
 };
+
+const statutPageCallbacks = buildEntityCallbacks({
+  //update front page
+  onSaveSuccess: async ({
+    context,
+    values,
+  }: EntityOnSaveProps<StatutPageCollection>) => {
+    const res = await revalidatePage(
+      context,
+      makeURLfromName(values.pagetitle as string)
+    );
+    console.log(res);
+  },
+});
+
 export const privacyPageCollection = buildCollection<StatutPageCollection>({
   name: 'Polityka Prywatności',
   singularName: 'Polityka Prywatności',
@@ -16,6 +36,7 @@ export const privacyPageCollection = buildCollection<StatutPageCollection>({
   description: 'Edytuj strone - Polityka Prywaności',
   exportable: true,
   group: 'strony',
+  callbacks: statutPageCallbacks,
   permissions: ({ authController }) => ({
     edit: true,
     create: false,
