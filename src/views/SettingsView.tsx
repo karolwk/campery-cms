@@ -20,7 +20,7 @@ const SettingsView = () => {
   const handleTokens = () => {
     settingsEntityController.open({
       entityId: 'bKhjO7YYCi8uamGquPSo',
-      path: '/tokeny',
+      path: '/tokens',
       collection: tokensCollection,
       width: 800,
     });
