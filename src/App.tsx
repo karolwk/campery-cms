@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { adminsUIDS, firebaseConfig } from './shared/API';
+import { adminEmails, firebaseConfig } from './shared/API';
 import { camperCollection } from './collections/camperCollection';
 import { mainAmenitiesCollection } from './collections/mainAmenitiesCollection';
 import { User as FirebaseUser } from 'firebase/auth';
@@ -18,7 +18,7 @@ import { tokensCollection } from './collections/tokensCollections';
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
     async ({ user, authController }) => {
-      if (adminsUIDS.includes(user?.uid as string)) {
+      if (adminEmails.includes(user?.email as string)) {
         return true;
       } else {
         throw Error('Brak uprawnień by przeglądać tą stronę!');
