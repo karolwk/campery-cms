@@ -1,4 +1,10 @@
-import { buildCollection } from '@camberi/firecms';
+import {
+  buildCollection,
+  buildEntityCallbacks,
+  EntityOnSaveProps,
+} from '@camberi/firecms';
+import { makeURLfromName } from '../utils/helpers';
+import { revalidatePage } from '../utils/nextRevalidate';
 
 type StatutPageCollection = {
   metaTitle: string;
@@ -12,15 +18,29 @@ type StatutPageCollection = {
   }[];
 };
 
+const pageStatutCallbacks = buildEntityCallbacks({
+  //update front page
+  onSaveSuccess: async ({
+    values,
+    context,
+  }: EntityOnSaveProps<StatutPageCollection>) => {
+    const res = await revalidatePage(
+      context,
+      '/' + makeURLfromName(values.pagetitle as string)
+    );
+    console.log(res);
+  },
+});
+
 export const statutPageCollection = buildCollection<StatutPageCollection>({
   name: 'Warunki wynajmu',
   singularName: 'Warunki wynajmu',
-
   path: 'statutPage',
   hideFromNavigation: true,
   description: 'Edytuj strone - Warunki wynajmu',
   exportable: true,
   group: 'strony',
+  callbacks: pageStatutCallbacks,
   permissions: ({ authController }) => ({
     edit: true,
     create: false,
@@ -30,6 +50,8 @@ export const statutPageCollection = buildCollection<StatutPageCollection>({
     pagetitle: {
       dataType: 'string',
       name: 'Tytuł strony',
+      defaultValue: 'Warunki wynajmu',
+      disabled: true,
       validation: {
         required: true,
       },
