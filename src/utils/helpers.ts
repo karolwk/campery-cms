@@ -1,8 +1,42 @@
 import { FireCMSContext } from '@camberi/firecms';
 import { tokensCollection } from '../collections/tokensCollections';
 
-export const makeURLfromName = (name: string): string => {
-  return name.trim().toLowerCase().replace(/ /g, '-');
+interface makeUrlOptions {
+  startDash?: boolean;
+}
+
+interface PolishChars {
+  [key: string]: string;
+}
+
+const polishToRegular = (text: string): string => {
+  const polishChars: PolishChars = {
+    ą: 'a',
+    ć: 'c',
+    ę: 'e',
+    ł: 'l',
+    ń: 'n',
+    ó: 'o',
+    ś: 's',
+    ż: 'z',
+    ź: 'z',
+  };
+
+  return text
+    .toLowerCase()
+    .replace(/[ąćęłńóśżź]/g, (match) => polishChars[match]);
+};
+
+export const makeURLfromName = (
+  name: string,
+  opts?: makeUrlOptions
+): string => {
+  const link = polishToRegular(name.trim().toLowerCase().replace(/ /g, '-'));
+  if (opts?.startDash) {
+    return '/' + link;
+  }
+
+  return link;
 };
 
 export const firstLetterLowercase = (name: string): string => {
