@@ -10,7 +10,7 @@ export type FaqMainPage = {
   answer: string;
 };
 
-const mainPageCallbacks = buildEntityCallbacks({
+const faqCallbacks = buildEntityCallbacks({
   //update front page
   onSaveSuccess: async ({ context }: EntityOnSaveProps<FaqMainPage>) => {
     const res = await revalidatePage(context, '/');
@@ -29,7 +29,7 @@ export const faqCollection = buildCollection<FaqMainPage>({
     create: true,
     delete: true,
   }),
-
+  callbacks: faqCallbacks,
   properties: {
     question: {
       name: 'Pytanie',
