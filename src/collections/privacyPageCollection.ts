@@ -21,7 +21,7 @@ const statutPageCallbacks = buildEntityCallbacks({
   }: EntityOnSaveProps<StatutPageCollection>) => {
     const res = await revalidatePage(
       context,
-      makeURLfromName(values.pagetitle as string)
+      makeURLfromName(values.pagetitle as string, { startDash: true })
     );
     console.log(res);
   },
@@ -46,6 +46,7 @@ export const privacyPageCollection = buildCollection<StatutPageCollection>({
     pagetitle: {
       dataType: 'string',
       name: 'Tytuł strony',
+      disabled: true,
       validation: {
         required: true,
       },
