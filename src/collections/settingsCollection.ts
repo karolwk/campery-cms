@@ -5,7 +5,6 @@ import {
   buildEntityCallbacks,
   EntityOnSaveProps,
 } from '@camberi/firecms';
-import { getToken } from '../utils/helpers';
 import { revalidatePage } from '../utils/nextRevalidate';
 
 type GoogleMaps = {
