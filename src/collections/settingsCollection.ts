@@ -37,7 +37,7 @@ type PageSettings = {
 const pageSettingsCallbacks = buildEntityCallbacks({
   //update front page
   onSaveSuccess: async ({ context }: EntityOnSaveProps<PageSettings>) => {
-    const res = await revalidatePage(context, '/kontakt');
+    const res = await revalidatePage(context, 'rebuild');
     console.log(res);
   },
 });
