@@ -1,9 +1,22 @@
-import { buildCollection } from '@camberi/firecms';
+import {
+  buildCollection,
+  buildEntityCallbacks,
+  EntityOnSaveProps,
+} from '@camberi/firecms';
+import { revalidatePage } from '../utils/nextRevalidate';
 
 export type FaqMainPage = {
   question: string;
   answer: string;
 };
+
+const mainPageCallbacks = buildEntityCallbacks({
+  //update front page
+  onSaveSuccess: async ({ context }: EntityOnSaveProps<FaqMainPage>) => {
+    const res = await revalidatePage(context, '/');
+    console.log(res);
+  },
+});
 
 export const faqCollection = buildCollection<FaqMainPage>({
   name: 'FAQ ogólne',
