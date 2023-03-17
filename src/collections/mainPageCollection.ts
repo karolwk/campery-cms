@@ -1,4 +1,10 @@
-import { buildCollection, EntityReference } from '@camberi/firecms';
+import {
+  buildCollection,
+  EntityReference,
+  buildEntityCallbacks,
+  EntityOnSaveProps,
+} from '@camberi/firecms';
+import { revalidatePage } from '../utils/nextRevalidate';
 
 type MarKetingIcons = {
   iconURL: string;
@@ -17,6 +23,14 @@ type MainPageCollection = {
   faq: EntityReference[];
 };
 
+const mainPageCallbacks = buildEntityCallbacks({
+  //update front page
+  onSaveSuccess: async ({ context }: EntityOnSaveProps<MainPageCollection>) => {
+    const res = await revalidatePage(context, '/');
+    console.log(res);
+  },
+});
+
 export const mainPageCollection = buildCollection<MainPageCollection>({
   name: 'Strona Główna',
   singularName: 'Strona Główna',
@@ -26,6 +40,7 @@ export const mainPageCollection = buildCollection<MainPageCollection>({
   description: 'Dodawaj, edytuj i usuwaj kampery',
   exportable: true,
   group: 'strony',
+  callbacks: mainPageCallbacks,
   permissions: ({ authController }) => ({
     edit: true,
     create: true,
