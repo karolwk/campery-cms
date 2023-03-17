@@ -53,7 +53,7 @@ const camperCallbacks = buildEntityCallbacks({
   },
   // update server
   onSaveSuccess: async ({ context, values }: EntityOnSaveProps<any>) => {
-    const res = await revalidatePage(context, values.urlSlug);
+    const res = await revalidatePage(context, '/kampery/' + values.urlSlug);
     console.log(res);
   },
 });
