@@ -44,9 +44,9 @@ const pageSettingsCallbacks = buildEntityCallbacks({
 export const pageSettingsCollection = buildCollection<PageSettings>({
   name: 'Ustawienia strony',
   description: 'Zmień główne ustawienia strony',
-  hideFromNavigation: true,
   path: 'settings',
   singularName: 'Podstawowe dane kontatkowe',
+  hideFromNavigation: true,
   group: 'pozostałe',
   properties: {
     logoURL: {
@@ -56,6 +56,7 @@ export const pageSettingsCollection = buildCollection<PageSettings>({
       storage: {
         storagePath: 'images',
         acceptedFiles: ['image/*'],
+
         metadata: {
           cacheControl: 'max-age=1000000',
         },
