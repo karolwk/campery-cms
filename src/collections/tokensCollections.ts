@@ -15,7 +15,7 @@ export const tokensCollection = buildCollection<TokenColletion>({
       dataType: 'string',
       name: 'Token ISR',
       description:
-        'Token służąc do rewitalizacji, zmiana może spowodować problemy z zapisywaniem zmian.',
+        'Token służący do komunikacji z frontem, najlepiej nie ruszać :) ',
     },
   },
 });
