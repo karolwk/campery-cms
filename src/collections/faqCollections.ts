@@ -1,7 +1,7 @@
 import {
   buildCollection,
   buildEntityCallbacks,
-  EntityOnSaveProps,
+  EntityOnDeleteProps,
 } from '@camberi/firecms';
 import { revalidatePage } from '../utils/nextRevalidate';
 
@@ -12,7 +12,7 @@ export type FaqMainPage = {
 
 const faqCallbacks = buildEntityCallbacks({
   //update front page
-  onSaveSuccess: async ({ context }: EntityOnSaveProps<FaqMainPage>) => {
+  onDelete: async ({ context }: EntityOnDeleteProps<FaqMainPage>) => {
     const res = await revalidatePage(context, '/');
     console.log(res);
   },
