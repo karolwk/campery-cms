@@ -73,3 +73,12 @@ export const getToken = async (context: FireCMSContext) => {
     return '';
   }
 };
+
+// Testing function
+export const testPromise = (ms: number, msg: string) =>
+  new Promise((resolve) =>
+    setTimeout(() => {
+      console.log(msg);
+      return resolve;
+    }, ms)
+  );
