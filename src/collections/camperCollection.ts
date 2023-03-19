@@ -50,14 +50,6 @@ type Camper = {
 
 let revalidateSignal = '';
 
-const timeout = (ms: number, msg: string) =>
-  new Promise((resolve) =>
-    setTimeout(() => {
-      console.log(msg);
-      return resolve;
-    }, ms)
-  );
-
 const camperCallbacks = buildEntityCallbacks({
   onPreSave: async ({ values, entityId, context }) => {
     // Check if there was a switch in published status
