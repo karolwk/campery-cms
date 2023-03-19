@@ -4,8 +4,9 @@ import {
   buildProperty,
   EntityReference,
   EntityOnSaveProps,
+  EntityOnDeleteProps,
 } from '@camberi/firecms';
-import { makeURLfromName } from '../utils/helpers';
+import { getIsPublished, makeURLfromName } from '../utils/helpers';
 import { revalidatePage } from '../utils/nextRevalidate';
 
 type CamperTechnicals = {
@@ -24,6 +25,8 @@ type CamperTechnicals = {
 };
 
 type Camper = {
+  isPublished: boolean;
+
   name: string;
   urlSlug: string;
   location: string;
@@ -45,15 +48,54 @@ type Camper = {
   mainAmenities?: EntityReference[];
 };
 
+let revalidateSignal = '';
+
+const timeout = (ms: number, msg: string) =>
+  new Promise((resolve) =>
+    setTimeout(() => {
+      console.log(msg);
+      return resolve;
+    }, ms)
+  );
+
 const camperCallbacks = buildEntityCallbacks({
-  onPreSave: ({ values }) => {
+  onPreSave: async ({ values, entityId, context }) => {
+    // Check if there was a switch in published status
+    if (entityId) {
+      const res = await getIsPublished(context, entityId);
+      // If no errors check difference in isPublished status then
+      if (typeof res !== 'undefined') {
+        if (res !== values.isPublished) {
+          revalidateSignal = 'REBUILD';
+        }
+      }
+    }
     // return the updated values
-    values.urlSlug = makeURLfromName(values.name);
+    values.urlSlug = makeURLfromName(values.name as string);
     return values;
   },
+
   // update server
-  onSaveSuccess: async ({ context, values }: EntityOnSaveProps<any>) => {
-    const res = await revalidatePage(context, '/kampery/' + values.urlSlug);
+  onSaveSuccess: async ({
+    context,
+    values,
+    status,
+  }: EntityOnSaveProps<Camper>) => {
+    if (status !== 'existing' || revalidateSignal === 'REBUILD') {
+      // Rebuild app because of new entity or signal switch
+      revalidateSignal = '';
+      // code for rebuilding
+      return;
+    }
+    // If entity exist we only revalidate
+    if (values.isPublished) {
+      const res = await revalidatePage(context, '/kampery/' + values.urlSlug);
+      console.log(res);
+    }
+  },
+  onDelete: async ({ context }: EntityOnDeleteProps<Camper>) => {
+    // After delete we must rebuild entire app
+    const res = await revalidatePage(context, '/kampery');
     console.log(res);
   },
 });
@@ -63,7 +105,7 @@ export const camperCollection = buildCollection<Camper>({
   singularName: 'camper',
   icon: 'AirportShuttle',
   path: 'campers',
-
+  defaultSize: 'm',
   description: 'Dodawaj, edytuj i usuwaj kampery',
   exportable: true,
   group: 'główne',
@@ -73,8 +115,18 @@ export const camperCollection = buildCollection<Camper>({
     delete: true,
   }),
   properties: {
+    isPublished: {
+      name: 'Opublikowane',
+
+      defaultValue: true,
+      dataType: 'boolean',
+      description:
+        'Czy kamper ma być opublikowany na stronie?(Domyslnie wlaczone)',
+    },
+
     name: {
       name: 'Nazwa modelu',
+
       validation: { required: true },
       dataType: 'string',
     },
@@ -95,6 +147,7 @@ export const camperCollection = buildCollection<Camper>({
       // The `buildProperty` method is a utility function used for type checking
       name: 'Obrazek główny',
       dataType: 'string',
+      validation: { required: true },
       storage: {
         storagePath: 'images',
         acceptedFiles: ['image/*'],
@@ -125,6 +178,7 @@ export const camperCollection = buildCollection<Camper>({
     },
     mainAmenities: {
       dataType: 'array',
+      validation: { required: true },
       name: 'Wybierz główne udogodnienia',
       of: {
         dataType: 'reference',
@@ -213,6 +267,7 @@ export const camperCollection = buildCollection<Camper>({
       properties: {
         brand: {
           name: 'Marka',
+          validation: { required: true },
           dataType: 'string',
         },
         model: {
