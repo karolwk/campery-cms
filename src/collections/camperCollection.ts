@@ -73,8 +73,8 @@ const camperCallbacks = buildEntityCallbacks({
     values,
     status,
   }: EntityOnSaveProps<Camper>) => {
+    // Rebuild app because of new entity or signal switch
     if (status !== 'existing' || revalidateSignal === 'REBUILD') {
-      // Rebuild app because of new entity or signal switch
       revalidateSignal = '';
       // code for rebuilding
       return;
@@ -87,7 +87,7 @@ const camperCallbacks = buildEntityCallbacks({
   },
   onDelete: async ({ context }: EntityOnDeleteProps<Camper>) => {
     // After delete we must rebuild entire app
-    const res = await revalidatePage(context, '/kampery');
+    const res = await revalidatePage(context, 'rebuild');
     console.log(res);
   },
 });
