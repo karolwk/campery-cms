@@ -215,7 +215,9 @@ export const camperCollection = buildCollection<Camper>({
     },
 
     priceInfo: {
-      name: 'Dodatkowe informacje do cen',
+      name: 'Dodatkowe informacje do udogodnień',
+      description: 'Np. Wyposażenie dodatkowe w cenie wynajmu.',
+      multiline: true,
       dataType: 'string',
     },
 
