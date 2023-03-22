@@ -46,6 +46,8 @@ type Camper = {
   }[];
   technicals: CamperTechnicals;
   mainAmenities?: EntityReference[];
+  metaTitle: string;
+  metaDescription: string;
 };
 
 let revalidateSignal = '';
@@ -64,6 +66,14 @@ const camperCallbacks = buildEntityCallbacks({
     }
     // return the updated values
     values.urlSlug = makeURLfromName(values.name as string);
+
+    if (!values.metaTitle) {
+      values.metaTitle = 'Wynajem kamperów Kraków - ' + values.name;
+    }
+
+    if (!values.metaDescription) {
+      values.metaDescription = `Wynajem kampera w Krakowie - ${values.name}. Zapraszamy do zapoznania się z naszą ofertą wynajmu kamperów i skorzystania z naszych usług!`;
+    }
     return values;
   },
 
@@ -307,6 +317,19 @@ export const camperCollection = buildCollection<Camper>({
           dataType: 'string',
         },
       },
+    },
+    metaTitle: {
+      name: 'Tytuł strony SEO',
+      dataType: 'string',
+      description:
+        'Pamietaj by tytuł nie był za długi optimum to tak ok 70 znaków',
+    },
+
+    metaDescription: {
+      name: 'Opis do strony do SEO',
+      dataType: 'string',
+      description:
+        'Pamietaj by opis nie był za długi optimum to tak ok 160 znaków',
     },
   },
   callbacks: camperCallbacks,
