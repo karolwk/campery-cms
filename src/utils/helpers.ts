@@ -1,4 +1,5 @@
 import { FireCMSContext } from '@camberi/firecms';
+import { BlogEntryContent } from '../collections/blogCollection';
 import { camperCollection } from '../collections/camperCollection';
 import { tokensCollection } from '../collections/tokensCollections';
 
@@ -82,3 +83,35 @@ export const testPromise = (ms: number, msg: string) =>
       return resolve;
     }, ms)
   );
+
+/**
+ * Calculates the average reading speed of a string based on word count and
+ * returns a string indicating the estimated reading time in minutes.
+ *
+ */
+
+export const calculateReadingSpeed = (input: BlogEntryContent[]): string => {
+  const margedSections = input
+    .map((entry) => {
+      if (entry.type === 'text') {
+        return entry.value;
+      }
+      return '';
+    })
+    .join(' ');
+
+  const words = margedSections.trim().split(/\s+/); // split input into words
+  const wordCount = words.length;
+  const averageReadingSpeed = 200; // average reading speed in words per minute
+  const readingTime = Math.round(wordCount / averageReadingSpeed); // calculate reading time in minutes
+  const starter = 'Ten artykuł przeczytasz';
+  if (readingTime < 1) {
+    return `${starter} w mniej niż minutę`;
+  } else if (readingTime === 1) {
+    return `${starter} w minutę`;
+  } else if (readingTime <= 4) {
+    return `${starter} w ${readingTime} minuty`;
+  } else {
+    return `${starter} w ${readingTime} minut`;
+  }
+};
