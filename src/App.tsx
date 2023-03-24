@@ -14,6 +14,7 @@ import { faqCollection } from './collections/faqCollections';
 import { statutPageCollection } from './collections/statutPageCollection';
 import { privacyPageCollection } from './collections/privacyPageCollection';
 import { tokensCollection } from './collections/tokensCollections';
+import { blogCollection } from './collections/blogCollection';
 
 export default function App() {
   const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
@@ -58,6 +59,7 @@ export default function App() {
         statutPageCollection,
         privacyPageCollection,
         tokensCollection,
+        blogCollection,
       ]}
       firebaseConfig={firebaseConfig}
       views={customViews}
