@@ -1,4 +1,8 @@
-import { buildCollection, buildProperty } from '@camberi/firecms';
+import {
+  buildCollection,
+  buildEntityCallbacks,
+  buildProperty,
+} from '@camberi/firecms';
 
 export interface BlogEntry {
   name: string;
@@ -27,10 +31,18 @@ interface BlogHeaderText {
   value: string;
 }
 
+const blogCallbacks = buildEntityCallbacks({
+  onIdUpdate: ({ values }) => {
+    console.log(values);
+    return values;
+  },
+});
+
 export const blogCollection = buildCollection<BlogEntry>({
   name: 'Blog entry',
   path: 'blog',
   icon: 'Article',
+  callbacks: blogCallbacks,
   properties: {
     name: {
       name: 'Tytuł',
