@@ -3,6 +3,11 @@ import {
   buildEntityCallbacks,
   buildProperty,
 } from '@camberi/firecms';
+import {
+  calculateReadingSpeed,
+  makeURLfromName,
+  polishToRegular,
+} from '../utils/helpers';
 
 export interface BlogEntry {
   name: string;
@@ -32,14 +37,16 @@ interface BlogHeaderText {
 }
 
 const blogCallbacks = buildEntityCallbacks({
-  onIdUpdate: ({ values }) => {
-    console.log(values);
+  onPreSave: ({ values }) => {
+    values.urlSlug = makeURLfromName(values.name);
+    values.readTime = calculateReadingSpeed(values.content);
+
     return values;
   },
 });
 
 export const blogCollection = buildCollection<BlogEntry>({
-  name: 'Blog entry',
+  name: 'Blog',
   path: 'blog',
   icon: 'Article',
   callbacks: blogCallbacks,
@@ -81,7 +88,7 @@ export const blogCollection = buildCollection<BlogEntry>({
         published: {
           id: 'published',
           label: 'Opublikowany',
-          disabled: !values.header_image,
+          disabled: !values.headerImage,
         },
         draft: 'Roboczy',
       },
@@ -139,6 +146,7 @@ export const blogCollection = buildCollection<BlogEntry>({
     urlSlug: {
       name: 'Adres url',
       dataType: 'string',
+
       disabled: true,
       description: 'Adres url generuje sie automatycznie z tytułu po zapisie.',
     },
