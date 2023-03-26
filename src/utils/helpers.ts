@@ -11,7 +11,7 @@ interface PolishChars {
   [key: string]: string;
 }
 
-const polishToRegular = (text: string): string => {
+export const polishToRegular = (text: string): string => {
   const polishChars: PolishChars = {
     ą: 'a',
     ć: 'c',
@@ -33,7 +33,12 @@ export const makeURLfromName = (
   name: string,
   opts?: makeUrlOptions
 ): string => {
-  const link = polishToRegular(name.trim().toLowerCase().replace(/ /g, '-'));
+  const link = polishToRegular(name)
+    .replace(/[^a-z0-9\s-]/g, '') // remove non-alphanumeric characters and extra spaces
+    .replace(/\s+/g, '-') // replace spaces with hyphens
+    .replace(/-+/g, '-') // remove consecutive hyphens
+    .replace(/(^-|-$)/g, ''); // remove leading and trailing hyphens;
+
   if (opts?.startDash) {
     return '/' + link;
   }
