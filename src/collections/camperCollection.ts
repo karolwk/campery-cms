@@ -6,7 +6,7 @@ import {
   EntityOnSaveProps,
   EntityOnDeleteProps,
 } from '@camberi/firecms';
-import { getIsPublished, makeURLfromName } from '../utils/helpers';
+import { getCamperCollection, makeURLfromName } from '../utils/helpers';
 import { revalidatePage } from '../utils/nextRevalidate';
 
 type CamperTechnicals = {
@@ -56,10 +56,13 @@ const camperCallbacks = buildEntityCallbacks({
   onPreSave: async ({ values, entityId, context }) => {
     // Check if there was a switch in published status
     if (entityId) {
-      const res = await getIsPublished(context, entityId);
-      // If no errors check difference in isPublished status then
+      const res = await getCamperCollection(context, entityId);
+      // If no errors check difference in isPublished or Campervan name
       if (typeof res !== 'undefined') {
-        if (res !== values.isPublished) {
+        if (
+          res.isPublished !== values.isPublished ||
+          res.name !== values.name
+        ) {
           revalidateSignal = 'REBUILD';
         }
       }
@@ -87,6 +90,9 @@ const camperCallbacks = buildEntityCallbacks({
     if (status !== 'existing' || revalidateSignal === 'REBUILD') {
       revalidateSignal = '';
       // code for rebuilding
+      const res = await revalidatePage(context, 'rebuild');
+      console.log(res);
+      console.log('PAGE REBUILD');
       return;
     }
     // If entity exist we only revalidate
@@ -99,6 +105,7 @@ const camperCallbacks = buildEntityCallbacks({
     // After delete we must rebuild entire app
     const res = await revalidatePage(context, 'rebuild');
     console.log(res);
+    console.log('PAGE REBUILD');
   },
 });
 
