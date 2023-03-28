@@ -1,7 +1,6 @@
 import { FireCMSContext } from '@camberi/firecms';
 import axios from 'axios';
 import { tokensCollection } from '../collections/tokensCollections';
-import { nextServerURL } from '../shared/API';
 
 // Get's token from database
 const getToken = async (context: FireCMSContext) => {
@@ -23,7 +22,16 @@ export const revalidatePage = async (context: FireCMSContext, data: string) => {
     return;
   }
   try {
-    const res = await axios.post(nextServerURL, { token: token, data: data });
+    let nextServerURL = process.env.REACT_APP_LOCAL_NEXT_REVALIDATE_URL;
+
+    if (process.env.NODE_ENV === 'production') {
+      nextServerURL = process.env.REACT_APP_NEXT_REVALIDATE_URL;
+    }
+
+    const res = await axios.post(nextServerURL as string, {
+      token: token,
+      data: data,
+    });
     console.log(res);
   } catch (error) {
     console.log(error);
