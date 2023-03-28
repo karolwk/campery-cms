@@ -24,7 +24,7 @@ export type BlogEntryContent = BlogEntryImages | BlogEntryText | BlogHeaderText;
 
 interface BlogEntryImages {
   type: 'images';
-  value: string[];
+  value: string;
 }
 
 interface BlogEntryText {
@@ -110,22 +110,17 @@ export const blogCollection = buildCollection<BlogEntry>({
             dataType: 'string',
             name: 'Tytuł sekcji',
           }),
-          images: buildProperty({
-            name: 'Obrazki',
-            dataType: 'array',
-            of: buildProperty({
-              dataType: 'string',
-              storage: {
-                storagePath: 'images',
-                acceptedFiles: ['image/*'],
-                metadata: {
-                  cacheControl: 'max-age=1000000',
-                },
+          images: {
+            name: 'Obrazek sekcji',
+            dataType: 'string',
+            storage: {
+              storagePath: 'images',
+              acceptedFiles: ['image/*'],
+              metadata: {
+                cacheControl: 'max-age=1000000',
               },
-            }),
-            description:
-              'This fields allows uploading multiple images at once and reordering',
-          }),
+            },
+          },
 
           text: buildProperty({
             dataType: 'string',
