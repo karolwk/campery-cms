@@ -53,14 +53,17 @@ export const firstLetterLowercase = (name: string): string => {
   return name.replace(' ', '_').toLowerCase();
 };
 
-export const getIsPublished = async (context: FireCMSContext, id: string) => {
+export const getCamperCollection = async (
+  context: FireCMSContext,
+  id: string
+) => {
   try {
     const res = await context.dataSource.fetchEntity({
       path: 'campers',
       entityId: id,
       collection: camperCollection,
     });
-    return res?.values.isPublished;
+    return res?.values;
   } catch (error) {
     console.log(error);
   }
