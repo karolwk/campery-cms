@@ -23,6 +23,7 @@ export const faqCollection = buildCollection<FaqMainPage>({
   singularName: 'faq',
   icon: 'Quiz',
   path: 'faq',
+  group: 'dodatkowe',
 
   permissions: ({ authController }) => ({
     edit: true,

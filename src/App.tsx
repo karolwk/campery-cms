@@ -33,6 +33,7 @@ export default function App() {
       path: 'strony',
       name: 'Strony',
       description: 'Edytuj strony',
+      group: 'strony',
       icon: 'Web',
       view: <PagesView />,
     },
@@ -40,6 +41,7 @@ export default function App() {
       path: 'settings',
       name: 'Ustawienia',
       description: 'Ustawienia aplikacji',
+      group: 'pozostałe',
       icon: 'Settings',
 
       view: <SettingsView />,

@@ -3,11 +3,7 @@ import {
   buildEntityCallbacks,
   buildProperty,
 } from '@camberi/firecms';
-import {
-  calculateReadingSpeed,
-  makeURLfromName,
-  polishToRegular,
-} from '../utils/helpers';
+import { calculateReadingSpeed, makeURLfromName } from '../utils/helpers';
 
 export interface BlogEntry {
   name: string;
@@ -101,6 +97,7 @@ export const blogCollection = buildCollection<BlogEntry>({
       validation: { required: true },
       dataType: 'array',
       columnWidth: 400,
+      group: 'strony',
       oneOf: {
         typeField: 'type', // you can ommit these `typeField` and `valueField` props to use the defaults
         valueField: 'value',
