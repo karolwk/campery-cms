@@ -2,8 +2,12 @@ import {
   buildCollection,
   buildEntityCallbacks,
   buildProperty,
+  EntityReference,
+  EntityOnSaveProps,
+  EntityOnDeleteProps,
 } from '@camberi/firecms';
 import { calculateReadingSpeed, makeURLfromName } from '../utils/helpers';
+import { revalidatePage } from '../utils/nextRevalidate';
 
 export interface BlogEntry {
   name: string;
@@ -14,6 +18,8 @@ export interface BlogEntry {
   urlSlug: string;
   content: BlogEntryContent[];
   readTime: string;
+  metaTitle: string;
+  metaDescription: string;
 }
 
 export type BlogEntryContent = BlogEntryImages | BlogEntryText | BlogHeaderText;
@@ -32,12 +38,48 @@ interface BlogHeaderText {
   value: string;
 }
 
+let revalidateSignal = '';
 const blogCallbacks = buildEntityCallbacks({
   onPreSave: ({ values }) => {
-    values.urlSlug = makeURLfromName(values.name);
-    values.readTime = calculateReadingSpeed(values.content);
+    if (!values.urlSlug) {
+      values.urlSlug = makeURLfromName(values.name as string);
+    }
+    values.readTime = calculateReadingSpeed(
+      values.content as BlogEntryContent[]
+    );
+    if (!values.metaTitle) {
+      values.metaTitle = values.name;
+    }
 
     return values;
+  },
+
+  // update server
+  onSaveSuccess: async ({
+    context,
+    values,
+    status,
+  }: EntityOnSaveProps<BlogEntry>) => {
+    // Rebuild app because of new entity or signal switch
+    if (status !== 'existing' || revalidateSignal === 'REBUILD') {
+      revalidateSignal = '';
+      // code for rebuilding
+      const res = await revalidatePage(context, 'rebuild');
+      console.log(res);
+      console.log('PAGE REBUILD');
+      return;
+    }
+    // If entity exist we only revalidate
+    if (values.status === 'published') {
+      const res = await revalidatePage(context, '/blog/' + values.urlSlug);
+      console.log(res);
+    }
+  },
+  onDelete: async ({ context }: EntityOnDeleteProps<BlogEntry>) => {
+    // After delete we must rebuild entire app
+    const res = await revalidatePage(context, 'rebuild');
+    console.log(res);
+    console.log('PAGE REBUILD');
   },
 });
 
@@ -45,6 +87,7 @@ export const blogCollection = buildCollection<BlogEntry>({
   name: 'Blog',
   path: 'blog',
   icon: 'Article',
+  group: 'strony',
   callbacks: blogCallbacks,
   properties: {
     name: {
@@ -141,6 +184,18 @@ export const blogCollection = buildCollection<BlogEntry>({
 
       disabled: true,
       description: 'Adres url generuje sie automatycznie z tytułu po zapisie.',
+    },
+
+    metaTitle: {
+      name: 'Tytuł strony do wyszukiwarki',
+      dataType: 'string',
+      description:
+        'Tytuł strony do wyszukiwarki domyslnie ustawi sie na tytul artykulu',
+    },
+    metaDescription: {
+      name: 'Opis strony do wyszukiwarki',
+      dataType: 'string',
+      description: 'Opis strony do wyszukiwaraki pownien mieć maks 160 znaków',
     },
   },
 });
