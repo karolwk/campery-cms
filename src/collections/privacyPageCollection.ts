@@ -19,11 +19,10 @@ const statutPageCallbacks = buildEntityCallbacks({
     context,
     values,
   }: EntityOnSaveProps<StatutPageCollection>) => {
-    const res = await revalidatePage(
+    await revalidatePage(
       context,
       makeURLfromName(values.pagetitle as string, { startDash: true })
     );
-    console.log(res);
   },
 });
 
