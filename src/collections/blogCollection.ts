@@ -2,7 +2,6 @@ import {
   buildCollection,
   buildEntityCallbacks,
   buildProperty,
-  EntityReference,
   EntityOnSaveProps,
   EntityOnDeleteProps,
 } from '@camberi/firecms';
@@ -71,8 +70,7 @@ const blogCallbacks = buildEntityCallbacks({
     }
     // If entity exist we only revalidate
     if (values.status === 'published') {
-      const res = await revalidatePage(context, '/blog/' + values.urlSlug);
-      console.log(res);
+      await revalidatePage(context, '/blog/' + values.urlSlug);
     }
   },
   onDelete: async ({ context }: EntityOnDeleteProps<BlogEntry>) => {
