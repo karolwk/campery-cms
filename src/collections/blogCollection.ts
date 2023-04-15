@@ -5,7 +5,11 @@ import {
   EntityOnSaveProps,
   EntityOnDeleteProps,
 } from '@camberi/firecms';
-import { calculateReadingSpeed, makeURLfromName } from '../utils/helpers';
+import {
+  calculateReadingSpeed,
+  getCollectionData,
+  makeURLfromName,
+} from '../utils/helpers';
 import { revalidatePage } from '../utils/nextRevalidate';
 
 export interface BlogEntry {
@@ -39,7 +43,7 @@ interface BlogHeaderText {
 
 let revalidateSignal = '';
 const blogCallbacks = buildEntityCallbacks({
-  onPreSave: ({ values }) => {
+  onPreSave: async ({ values, entityId, context }) => {
     if (!values.urlSlug) {
       values.urlSlug = makeURLfromName(values.name as string);
     }
@@ -48,6 +52,20 @@ const blogCallbacks = buildEntityCallbacks({
     );
     if (!values.metaTitle) {
       values.metaTitle = values.name;
+    }
+    if (entityId) {
+      const res = await getCollectionData(
+        context,
+        'blog',
+        blogCollection,
+        entityId
+      );
+      // If no errors check difference in page status
+      if (typeof res !== 'undefined') {
+        if (res.status !== values.status) {
+          revalidateSignal = 'REBUILD';
+        }
+      }
     }
 
     return values;
