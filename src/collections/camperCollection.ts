@@ -6,7 +6,7 @@ import {
   EntityOnSaveProps,
   EntityOnDeleteProps,
 } from '@camberi/firecms';
-import { getCamperCollection, makeURLfromName } from '../utils/helpers';
+import { getCollectionData, makeURLfromName } from '../utils/helpers';
 import { revalidatePage } from '../utils/nextRevalidate';
 
 type CamperTechnicals = {
@@ -56,7 +56,12 @@ const camperCallbacks = buildEntityCallbacks({
   onPreSave: async ({ values, entityId, context }) => {
     // Check if there was a switch in published status
     if (entityId) {
-      const res = await getCamperCollection(context, entityId);
+      const res = await getCollectionData(
+        context,
+        'campers',
+        camperCollection,
+        entityId
+      );
       // If no errors check difference in isPublished or Campervan name
       if (typeof res !== 'undefined') {
         if (
