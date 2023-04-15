@@ -28,6 +28,12 @@ export const revalidatePage = async (context: FireCMSContext, data: string) => {
       nextServerURL = process.env.REACT_APP_NEXT_REVALIDATE_URL;
     }
 
+    if (process.env.NODE_ENV === 'development' && data === 'rebuild') {
+      console.log('PAGE MOKED REBUILD');
+      Promise.resolve();
+      return;
+    }
+
     const res = await axios.post(nextServerURL as string, {
       token: token,
       data: data,
