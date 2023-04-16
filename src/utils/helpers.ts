@@ -1,6 +1,5 @@
 import { FireCMSContext } from '@camberi/firecms';
 import { BlogEntryContent } from '../collections/blogCollection';
-import { camperCollection } from '../collections/camperCollection';
 import { tokensCollection } from '../collections/tokensCollections';
 
 interface makeUrlOptions {
@@ -53,15 +52,19 @@ export const firstLetterLowercase = (name: string): string => {
   return name.replace(' ', '_').toLowerCase();
 };
 
-export const getCamperCollection = async (
+// Get's data from given collection
+
+export const getCollectionData = async (
   context: FireCMSContext,
+  path: string,
+  collection: any,
   id: string
 ) => {
   try {
     const res = await context.dataSource.fetchEntity({
-      path: 'campers',
+      path: path,
       entityId: id,
-      collection: camperCollection,
+      collection,
     });
     return res?.values;
   } catch (error) {
