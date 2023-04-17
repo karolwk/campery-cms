@@ -20,7 +20,7 @@ const TopView = ({ children, title }: Props) => {
             my: 4,
           }}
         >
-          <Grid container rowSpacing={5} columnSpacing={2}>
+          <Grid container rowSpacing={5} columnSpacing={3}>
             <Grid item xs={12}>
               <Typography variant={'h4'}>{title}</Typography>
             </Grid>
