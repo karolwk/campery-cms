@@ -77,6 +77,10 @@ const blogCallbacks = buildEntityCallbacks({
     values,
     status,
   }: EntityOnSaveProps<BlogEntry>) => {
+    if (values.status !== 'published') {
+      revalidateSignal = '';
+      return;
+    }
     // Rebuild app because of new entity or signal switch
     if (status !== 'existing' || revalidateSignal === 'REBUILD') {
       revalidateSignal = '';
